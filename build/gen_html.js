@@ -31,19 +31,21 @@ const html=`<!doctype html>
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#1E2A4A">
+<meta name="author" content="Ivonne Urrutia">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Lecturas en el Perú">
 <meta property="og:locale" content="es_PE">
 <meta property="og:title" content="Recomendaciones: el libro y la lectura en el Perú">
 <meta property="og:description" content="Política pública e innovación por actor para el ecosistema del libro en el Perú, con fuente por cifra.">
 <meta property="og:url" content="${SITIO}recomendaciones.html">
-<meta property="og:image" content="${SITIO}og.png">
+<meta property="og:image" content="${SITIO}og-lecturas.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lecturas en el Perú, estudio de Ivonne Urrutia: qué se lee en el Perú por tipo de publicación (ENL 2022)">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Recomendaciones: el libro y la lectura en el Perú">
 <meta name="twitter:description" content="Política pública e innovación por actor, con fuente por cifra.">
-<meta name="twitter:image" content="${SITIO}og.png">
+<meta name="twitter:image" content="${SITIO}og-lecturas.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,800&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css"></head>
