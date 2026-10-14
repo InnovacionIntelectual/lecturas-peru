@@ -219,6 +219,79 @@ tbody tr:nth-child(even) td{background:color-mix(in srgb, var(--enfasis) 45%, tr
 .doc .lead{font-size:1.22rem}
 .doc .tabla-scroll{margin:1.25rem 0}
 
+/* ============================================================
+   Movimiento (solo si hay JS y no se pidió reducir movimiento)
+   ============================================================ */
+/* Transición suave entre tablero y recomendaciones (navegadores compatibles) */
+@view-transition{navigation:auto}
+.lateral{view-transition-name:lateral}
+::view-transition-old(root){animation:salir .22s ease both}
+::view-transition-new(root){animation:entrar .38s cubic-bezier(.2,.8,.2,1) both}
+@keyframes salir{to{opacity:0;transform:translateY(-6px)}}
+@keyframes entrar{from{opacity:0;transform:translateY(10px)}}
+
+/* Entrada del hero */
+.anima .hero-texto > *{animation:subir .7s cubic-bezier(.2,.8,.2,1) both}
+.anima .hero-texto > :nth-child(2){animation-delay:.08s}
+.anima .hero-texto > :nth-child(3){animation-delay:.16s}
+.anima .hero-texto > :nth-child(4){animation-delay:.24s}
+.anima .hero-texto > :nth-child(5){animation-delay:.32s}
+.lomo.l1{transition-delay:.08s}.lomo.l2{transition-delay:.16s}.lomo.l3{transition-delay:.24s}
+@keyframes subir{from{opacity:0;transform:translateY(16px)}}
+
+/* Aparición al desplazarse */
+.anima .revelar{opacity:0;transform:translateY(22px);
+  transition:opacity .6s cubic-bezier(.2,.8,.2,1) var(--retardo,0ms), transform .6s cubic-bezier(.2,.8,.2,1) var(--retardo,0ms)}
+.anima .revelar.visible{opacity:1;transform:none}
+
+/* Tarjetas con relieve al pasar el cursor */
+figure,.kpi,.cifras div{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease}
+@media (hover:hover){
+  figure:hover,.kpi:hover,.cifras div:hover{transform:translateY(-3px);box-shadow:var(--sombra-alta)}
+}
+
+/* Implicancias: aparecen al cambiar el filtro por actor */
+.anima .impl:not([hidden]){animation:subir .45s cubic-bezier(.2,.8,.2,1) both}
+
+/* Destello del título al llegar desde el menú */
+.destello{position:relative}
+.destello::after{content:"";position:absolute;left:0;bottom:-.3rem;height:3px;width:100%;border-radius:3px;
+  background:linear-gradient(90deg, var(--verde), var(--ocre), var(--rosa));transform-origin:left;
+  animation:subrayar 1.6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes subrayar{0%{transform:scaleX(0);opacity:1}45%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+
+/* Enlaces del lateral: la marca activa se desliza */
+.lat-lista a{transition:background .2s, color .2s, box-shadow .25s cubic-bezier(.2,.8,.2,1), padding-left .25s cubic-bezier(.2,.8,.2,1)}
+.lat-lista a[aria-current]{padding-left:.95rem}
+/* En móvil los enlaces entran en cascada al abrir el cajón */
+@media (max-width:960px){
+  .lateral.abierto .lat-lista li{animation:deslizar .4s cubic-bezier(.2,.8,.2,1) both}
+  .lateral.abierto .lat-lista li:nth-child(2){animation-delay:.03s}
+  .lateral.abierto .lat-lista li:nth-child(3){animation-delay:.06s}
+  .lateral.abierto .lat-lista li:nth-child(4){animation-delay:.09s}
+  .lateral.abierto .lat-lista li:nth-child(5){animation-delay:.12s}
+  .lateral.abierto .lat-lista li:nth-child(6){animation-delay:.15s}
+  .lateral.abierto .lat-lista li:nth-child(7){animation-delay:.18s}
+  .lateral.abierto .lat-lista li:nth-child(n+8){animation-delay:.21s}
+  .velo{animation:aparecer .25s ease both}
+}
+@keyframes deslizar{from{opacity:0;transform:translateX(-14px)}}
+@keyframes aparecer{from{opacity:0}}
+
+/* Volver arriba */
+.arriba{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:30;width:46px;height:46px;border-radius:50%;
+  border:1px solid var(--linea);background:var(--superficie);color:var(--tinta);font-size:1.2rem;cursor:pointer;box-shadow:var(--sombra);
+  opacity:0;transform:translateY(14px) scale(.9);pointer-events:none;transition:opacity .25s, transform .25s, border-color .2s}
+.arriba.visible{opacity:1;transform:none;pointer-events:auto}
+.arriba:hover{border-color:var(--ocre);transform:translateY(-2px)}
+
+@media (prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
+  figure,.kpi,.cifras div,.arriba,.lat-lista a{transition:none}
+  figure:hover,.kpi:hover,.cifras div:hover{transform:none}
+  .destello::after{animation:none;display:none}
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width:1180px){
   .resumen{grid-template-columns:repeat(2,1fr)}
@@ -259,7 +332,8 @@ tbody tr:nth-child(even) td{background:color-mix(in srgb, var(--enfasis) 45%, tr
 
 /* ---------- Impresión ---------- */
 @media print{
-  .lateral,.tope,.velo,.progreso,.actores,.saltar{display:none}
+  .lateral,.tope,.velo,.progreso,.actores,.saltar,.arriba{display:none}
+  .revelar{opacity:1!important;transform:none!important}
   .pagina{margin-left:0}
   body{background:#fff}
   figure,.kpi,.cifras div,.impl,.veredicto{box-shadow:none;break-inside:avoid}

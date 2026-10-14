@@ -88,6 +88,7 @@ ${h}
 </div>
 <script src="tema.js"></script>
 <script src="nav.js"></script>
+<script src="animaciones.js"></script>
 </body></html>`;
 fs.writeFileSync(require('path').join(__dirname,'..','docs','recomendaciones.html'),html);
 console.log('html ok',html.length);

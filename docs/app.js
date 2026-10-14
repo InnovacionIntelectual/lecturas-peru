@@ -23,7 +23,12 @@
       el.setAttribute('aria-label', `${cortos[i]}: ${fmt(v)} %`);
     });
   }
-  pintarEstante(1);
+  // los lomos crecen desde la base al cargar (salvo movimiento reducido)
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ pintarEstante(1); }
+  else {
+    [...estante.children].forEach(el=>{ el.style.height='0%'; });
+    requestAnimationFrame(()=>requestAnimationFrame(()=>pintarEstante(1)));
+  }
   document.querySelectorAll('[data-ambito]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('[data-ambito]').forEach(x=>x.setAttribute('aria-checked','false'));
     b.setAttribute('aria-checked','true'); pintarEstante(+b.dataset.ambito);
@@ -106,6 +111,7 @@
     }
   }
   render();
+  window.__graficos = charts;
   window.__repintarGraficos = render;
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',render);
 
